@@ -15,6 +15,22 @@ Permet d'observer les noeuds pour lesquels la couleur est modifiée pour prendre
 */
 function trapColorChanges(oldColor, newColor) {
     // À implémenter
+    const callback = function(mutationList, observer){
+        for(const mutation of mutationList){
+            if (mutation.type == "attributes"){
+                if (mutation.attributeName == "style" && mutation.target.style.color == oldColor){
+                    mutation.target.style.color = newColor;
+                }
+            }
+
+        }
+    }
+    const observer = new MutationObserver(callback);
+    const targetNode = document.getElementById("contents");
+    const config = {attributes: true , childlist: true , subtree: true};
+
+    observer.observe(targetNode, config);
+    
 }
 
 window.onload = function() {
@@ -24,9 +40,13 @@ window.onload = function() {
        • span en rouge (red)
        • p en bleu (blue)
     */
+       setTimeout(function(){
+        colorElements("span", "red");
+        colorElements("p", "blue");
+    }, 5000);
     
     // 2. Invoquer trapColorChanges afin d'intercepter les noeuds dont la couleur change en rouge (red), afin de plutôt remplacer la couleur par vert (green)
     // ...
-    
+    trapColorChanges("red", "green");
     
 }

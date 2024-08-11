@@ -28,4 +28,10 @@ setTimeout( () => watcher.stop(), 20000)
   TODO: consommer l'ensemble des événements produits concernant les différentes
   villes dans le flux d'événements. Imprimer les données météorologiques
   (invoquez printWeather).
+  
 */
+cities.forEach( (city) => {
+  emitter.on(city.name, (data) => {
+      printWeather(city.name, data)
+  })
+})

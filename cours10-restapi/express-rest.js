@@ -36,6 +36,10 @@ contacts.find = function(id, lastName) {
 // get (all, all with pagination, all from search)
 // post (add new contact)
 // TODO
+app.route("/contacts/")
+    .get((req, res) => {
+
+    })
 
 // Route on a specific contact id. Supported operations:
 // get (get specific contact)
@@ -43,6 +47,10 @@ contacts.find = function(id, lastName) {
 // patch (partially replace specific contact)
 // delete (delete specific contact)
 // TODO
+app.route("/contacts/:id")
+    .get((req, res) => {
+        
+    })
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
 

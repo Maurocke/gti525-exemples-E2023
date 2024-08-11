@@ -40,6 +40,19 @@ class WeatherWatcher {
               contexte (let that = this).
             */
 
+            this.timerIds.push( setInterval(() => {
+                const url = buildOpenMeteoURL(city.latitude, city.longitude);
+                fetch(url)
+                .then(handleErrors)
+                .then(response => response.json() )
+	            .then( data => {
+                    this.emitter.emit(city.name, data["current_weather"])
+
+                });
+
+              
+            }, city.interval))
+
 
         })
     }
@@ -52,3 +65,4 @@ class WeatherWatcher {
 }
 
 // TODO: assurez-vous que WeatherWatcher soit exporté en tant que module ES6!
+export default WeatherWatcher

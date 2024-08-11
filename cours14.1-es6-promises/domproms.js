@@ -38,6 +38,17 @@ function getPromises() {
 
     // TODO (1)
 
+    for (let i = 0; i<buttons.length; i++) {
+        let button = buttons[i];
+        proms.push( new Promise( function(resolve, reject){
+            button.addEventListener("click", (event) => {
+                resolve(event.target)
+            })
+
+        }))
+        
+    }
+
     return proms
 }
 
@@ -48,6 +59,13 @@ function getPromises() {
 // Interdit: ne pas ajouter d'événement click au bouton
 function waitForButtons(proms) {
     // TODO (2)
+    proms.forEach((prom) => {
+        prom.then( (button) =>  {
+            button.color()
+        })
+        
+    });
+
 }
 
 // Attendre que le premier bouton ne soit cliqué
@@ -56,6 +74,9 @@ function waitForButtons(proms) {
 // Interdit: ne pas ajouter d'événement click au bouton
 function waitForFirstButton(proms) {
     // TODO (3)
+    Promise.race(proms).then((button) => {
+        firstClicked(button);
+    })
 }
 
 // Attendre que tous les boutons aient été cliqués
@@ -64,7 +85,11 @@ function waitForFirstButton(proms) {
 // Interdit: ne pas ajouter d'événement click au bouton
 function waitForAllButtons(proms) {
     // TODO (4)
+    Promise.all(proms).then((button) => {
+        allClicked();
+    })
 }
+
 
 window.addEventListener("load", () => {
     // Créer des boutons aléatoires
@@ -78,3 +103,17 @@ window.addEventListener("load", () => {
     waitForFirstButton(proms)
     waitForAllButtons(proms)
 })
+
+Promise.most = function(proms) {
+    nbSucces = 0;
+    proms.forEach((prom) => {
+        prom.then( () =>  {
+            nbSucces++;
+        })
+        
+    });
+
+    if (nbSucces >= (proms.length/2)){
+        
+    }
+}
